@@ -1,9 +1,14 @@
 import React, { useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
-import About from './components/About';
+import AboutUs from './components/AboutUs';
 import Rooms from './components/Rooms';
-import Amenities from './components/Amenities';
+import ProjectHighlights from './components/ProjectHighlights';
+import AmenitiesIconGrid from './components/AmenitiesIconGrid';
+import LocationHighlights from './components/LocationHighlights';
+import Gallery from './components/Gallery';
+import Testimonials from './components/Testimonials';
+import PricingTable from './components/PricingTable';
 import Footer from './components/Footer';
 
 function App() {
@@ -12,13 +17,13 @@ function App() {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          entry.target.classList.add('animate-fade-up');
+          entry.target.classList.add('is-visible');
           observer.unobserve(entry.target);
         }
       });
     }, { threshold: 0.1 });
 
-    document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+    document.querySelectorAll('.animate-fade-up').forEach(el => observer.observe(el));
     
     return () => observer.disconnect();
   }, []);
@@ -28,9 +33,14 @@ function App() {
       <Navbar />
       <main>
         <Hero />
-        <About />
+        <AboutUs />
+        <ProjectHighlights />
+        <PricingTable />
         <Rooms />
-        <Amenities />
+        <AmenitiesIconGrid />
+        <LocationHighlights />
+        <Gallery />
+        <Testimonials />
       </main>
       <Footer />
     </div>

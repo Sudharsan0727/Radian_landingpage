@@ -23,14 +23,14 @@ const Hero = () => {
             </h1>
             <div className="flex flex-col md:flex-row items-start gap-6 animate-fade-up animate-delay-3">
               <button className="btn-gold">View Projects</button>
-              <button className="px-8 py-4 border border-white/30 text-white font-medium hover:bg-white hover:text-luxury-black transition-all duration-500 uppercase tracking-widest text-xs">
+              <button className="px-8 py-4 bg-white text-luxury-black font-medium hover:bg-gold hover:text-white transition-all duration-500 uppercase tracking-widest text-xs">
                 Our Services
               </button>
             </div>
           </div>
 
           <div className="lg:col-span-5">
-            <div className="glass-card p-8 md:p-10 rounded-sm">
+            <div className="bg-white/10 backdrop-blur-[40px] border border-white/20 p-8 md:p-10 rounded-sm relative z-10 shadow-2xl">
               <h3 className="text-2xl font-heading text-white mb-8 text-center italic">Get A Quote</h3>
               <form className="space-y-6">
                 <div>
