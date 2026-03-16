@@ -3,6 +3,8 @@
  * @param {Object} formData - Object containing fullName, email, and mobile
  * @returns {Promise} - Fetch promise
  */
+import axios from 'axios';
+
 export const submitLead = (formData) => {
   const { fullName, email, mobile } = formData;
   
@@ -10,7 +12,7 @@ export const submitLead = (formData) => {
   const firstName = nameParts[0] || '';
   const lastName = nameParts.slice(1).join(' ') || '.';
 
-  // 1. Salesforce Web-to-Lead (DO NOT TOUCH THIS LOGIC)
+  // 1. Salesforce Web-to-Lead
   const salesforceParams = {
     firstName: firstName,
     lastName: lastName,
@@ -39,23 +41,15 @@ export const submitLead = (formData) => {
     body: salesforceBody
   });
 
-  // 2. Email Notification (New Feature)
-  const emailPromise = fetch("/mail.php", {
-    method: 'POST',
-    keepalive: true,
-    headers: { 'Content-Type': 'application/json' },
-
-
-    body: JSON.stringify({
+  // 2. Email Notification (Using Node.js Express Server)
+  // Ensure your server.js is running on the live server
+  const emailPromise = axios.post('https://radiancedevelopers.com/api/send-email', {
       fullName,
       email,
       mobile,
       project: "Radiance Eternity"
-    })
-  }).catch(err => console.error("Email notification error:", err));
-  
-  // Return combined promise
+  }).catch(err => console.error("Node.js Email Error:", err));
+
   return Promise.allSettled([salesforcePromise, emailPromise]);
 };
-
 
