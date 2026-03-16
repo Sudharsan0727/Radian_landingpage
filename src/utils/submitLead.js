@@ -43,12 +43,13 @@ export const submitLead = (formData) => {
 
   // 2. Email Notification (Using Node.js Express Server)
   // Ensure your server.js is running on the live server
-  const emailPromise = axios.post('https://radiancedevelopers.com/api/send-email', {
+  const emailPromise = axios.post('http://localhost:5000/send-email', {
       fullName,
       email,
       mobile,
       project: "Radiance Eternity"
   }).catch(err => console.error("Node.js Email Error:", err));
+
 
   return Promise.allSettled([salesforcePromise, emailPromise]);
 };

@@ -1,7 +1,7 @@
-const express = require('express');
-const nodemailer = require('nodemailer');
-const cors = require('cors');
-const bodyParser = require('body-parser');
+import express from 'express';
+import nodemailer from 'nodemailer';
+import cors from 'cors';
+import bodyParser from 'body-parser';
 
 const app = express();
 const port = 5000;
@@ -10,21 +10,24 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Email Transporter Configuration
-// For Gmail, you need to use an "App Password"
+// Email Transporter Configuration (Using same settings as your PHP script)
 const transporter = nodemailer.createTransport({
-    service: 'gmail',
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true, // SSL
     auth: {
-        user: 'webenquiryformm@gmail.com', // Your Gmail
-        pass: 'tvvkczjffrrfhufv'           // Your Gmail App Password
+        user: 'sudharsan0727@gmail.com',
+        pass: 'awtuyrltoafwykim'
     }
 });
+
+
 
 app.post('/send-email', (req, res) => {
     const { fullName, email, mobile, project } = req.body;
 
     const mailOptions = {
-        from: '"Radiance Eternity Website" <webenquiryformm@gmail.com>',
+        from: '"Radiance Eternity Website" <sudharsan0727@gmail.com>',
         to: 'sudharsan0727@gmail.com',
         subject: `New Lead Enquiry - ${fullName}`,
         html: `
@@ -56,3 +59,4 @@ app.post('/send-email', (req, res) => {
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
+
