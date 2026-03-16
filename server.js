@@ -28,7 +28,7 @@ app.post('/send-email', (req, res) => {
 
     const mailOptions = {
         from: '"Radiance Eternity Website" <sudharsan0727@gmail.com>',
-        to: 'sudharsan0727@gmail.com',
+        to: 'karthik@radiancerealty.in',
         subject: `New Lead Enquiry - ${fullName}`,
         html: `
             <!DOCTYPE html>
