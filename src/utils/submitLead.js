@@ -10,13 +10,14 @@ export const submitLead = (formData) => {
   const firstName = nameParts[0] || '';
   const lastName = nameParts.slice(1).join(' ') || '.';
 
-  const params = {
+  // 1. Salesforce Web-to-Lead (DO NOT TOUCH THIS LOGIC)
+  const salesforceParams = {
     firstName: firstName,
     lastName: lastName,
-    first_name: firstName, // Standard Salesforce field name
-    last_name: lastName,   // Standard Salesforce field name
+    first_name: firstName, 
+    last_name: lastName,   
     mobile: mobile,
-    phone: mobile,         // Common Salesforce field name
+    phone: mobile,         
     email: email,
     project: "Radiance Eternity",
     source: "Google",
@@ -27,20 +28,32 @@ export const submitLead = (formData) => {
     location: "Chennai",
   };
 
+  const salesforceBody = new URLSearchParams(salesforceParams).toString();
+  const salesforceUrl = "https://radiancerealty.my.salesforce-sites.com/ld/webToLead";
 
-  const body = new URLSearchParams(params).toString();
-  const url = "https://radiancerealty.my.salesforce-sites.com/ld/webToLead";
-
-  // Use keepalive: true to ensure the request completes even if the page is navigated away
-  return fetch(url, {
+  const salesforcePromise = fetch(salesforceUrl, {
     method: 'POST',
     mode: 'no-cors',
     keepalive: true,
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: body
-  }).catch(err => {
-    console.error("Background lead submission error:", err);
-    throw err;
+    body: salesforceBody
   });
+
+  // 2. Email Notification (New Feature)
+  const emailPromise = fetch("mail.php", {
+    method: 'POST',
+    keepalive: true,
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      fullName,
+      email,
+      mobile,
+      project: "Radiance Eternity"
+    })
+  }).catch(err => console.error("Email notification error:", err));
+  
+  // Return combined promise
+  return Promise.allSettled([salesforcePromise, emailPromise]);
 };
+
 
